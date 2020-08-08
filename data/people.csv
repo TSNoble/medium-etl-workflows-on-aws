@@ -1,0 +1,6 @@
+FORENAME,SURNAME,AGE,ADDRESS,COMPANY,JOB,MONTHS_WORKED,SKILLS
+Alice,Smith,21,1 Fake Street,Google,Software Engineer,6,"Architecture, Programming, Distributed Systems"
+Bob,Jones,42,2 Alias Avenue,Amazon,Data Scientist,12,"Calculus, Statistics, Neural Networks"
+Charlie,Brown,60,3 Foo Lane,Microsoft,Platform Engineer,42,"AWS, Programming, Azure"
+Dan,White,19,4 Bar Close,Google,Software Engineer,1,"Programming, Testing, Agile"
+Evelyn,Baker,5 Baz Drive,Amazon,Data Scientist,100,"Maths, Programming, Modelling"

@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file=requirements/all.txt requirements/dev.in requirements/requirements.in requirements/stack.in
 #
-attrs==19.3.0             # via cattrs, jsii
+attrs==19.3.0             # via cattrs, jsii, pytest
 aws-cdk.aws-events==1.57.0  # via aws-cdk.aws-s3
 aws-cdk.aws-iam==1.57.0   # via aws-cdk.aws-events, aws-cdk.aws-kms, aws-cdk.aws-s3
 aws-cdk.aws-kms==1.57.0   # via aws-cdk.aws-s3
@@ -19,14 +19,25 @@ cattrs==1.0.0             # via jsii
 click==7.1.2              # via pip-tools
 constructs==3.0.4         # via aws-cdk.aws-events, aws-cdk.aws-iam, aws-cdk.aws-kms, aws-cdk.aws-s3, aws-cdk.core
 docutils==0.15.2          # via botocore
+iniconfig==1.0.1          # via pytest
 invoke==1.4.1             # via -r requirements/dev.in
-jmespath==0.10.0          # via boto3, botocore
+jmespath==0.10.0          # via -r requirements/requirements.in, boto3, botocore
 jsii==1.10.0              # via aws-cdk.aws-events, aws-cdk.aws-iam, aws-cdk.aws-kms, aws-cdk.aws-s3, aws-cdk.cloud-assembly-schema, aws-cdk.core, aws-cdk.cx-api, aws-cdk.region-info, constructs
+more-itertools==8.4.0     # via pytest
+numpy==1.19.1             # via pandas
+packaging==20.4           # via pytest
+pandas==1.1.0             # via -r requirements/requirements.in
 pip-tools==5.3.1          # via -r requirements/dev.in
+pluggy==0.13.1            # via pytest
 publication==0.0.3        # via aws-cdk.aws-events, aws-cdk.aws-iam, aws-cdk.aws-kms, aws-cdk.aws-s3, aws-cdk.cloud-assembly-schema, aws-cdk.core, aws-cdk.cx-api, aws-cdk.region-info, constructs
-python-dateutil==2.8.1    # via botocore, jsii
+py==1.9.0                 # via pytest
+pyparsing==2.4.7          # via packaging
+pytest==6.0.1             # via -r requirements/dev.in
+python-dateutil==2.8.1    # via botocore, jsii, pandas
+pytz==2020.1              # via pandas
 s3transfer==0.3.3         # via boto3
-six==1.15.0               # via pip-tools, python-dateutil
+six==1.15.0               # via packaging, pip-tools, python-dateutil
+toml==0.10.1              # via pytest
 typing-extensions==3.7.4.2  # via jsii
 urllib3==1.25.10          # via botocore
 
