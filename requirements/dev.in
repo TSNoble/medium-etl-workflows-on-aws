@@ -4,3 +4,6 @@ pytest
 pytest-cov
 codecov
 moto
+awscli
+flake8
+mypy
