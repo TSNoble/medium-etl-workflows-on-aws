@@ -4,7 +4,7 @@ cache: pip
 env:
   - AWS_DEFAULT_REGION=eu-west-1
 install:
-  - apt-get install nodejs
+  - sudo apt-get install nodejs
   - npm install -g aws-cdk
   - pip install -r requirements/all.txt
 script:
