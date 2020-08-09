@@ -39,7 +39,7 @@ def clean(c):
 
 @task
 def deploy(c):
-    c.run("cdk deploy HelloWorldStack --profile bjss-tom --require-approval never")
+    c.run("cdk deploy HelloWorldStack --require-approval never")
 
 
 @task
