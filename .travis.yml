@@ -4,6 +4,7 @@ cache: pip
 env:
   - AWS_DEFAULT_REGION=eu-west-1
 install:
+  - pip install -r requirements/jobs.txt
   - pip install -r requirements/dev.txt
 script:
   - pytest --cov=source test/unit
