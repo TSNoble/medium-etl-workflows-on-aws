@@ -1,2 +1,5 @@
 aws-cdk.core
 aws-cdk.aws-s3
+aws-cdk.aws-lambda
+aws-cdk.aws-stepfunctions
+aws-cdk.aws-stepfunctions-tasks

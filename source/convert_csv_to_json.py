@@ -12,5 +12,4 @@ def lambda_handler(event, _):
 
 def csv_to_json(file_obj) -> str:
     dataframe = pd.read_csv(file_obj)
-    print("This ran")
     return dataframe.to_json(orient="records")

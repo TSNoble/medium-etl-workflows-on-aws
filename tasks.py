@@ -24,5 +24,19 @@ def sync(c):
 
 
 @task
+def package(c):
+    c.run("mkdir dist")
+    c.run("cp -R source dist")
+    c.run("pip install -r requirements/jobs.txt -t dist")
+
+
+@task
+def clean(c):
+    c.run("rm -rf dist")
+    c.run("rm -rf cdk.out")
+    c.run("rm -rf .pytest_cache")
+
+
+@task
 def deploy(c):
     c.run("cdk deploy HelloWorldStack --profile bjss-tom")

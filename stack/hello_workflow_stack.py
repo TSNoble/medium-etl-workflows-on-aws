@@ -5,7 +5,8 @@ import aws_cdk.aws_s3 as s3
 import aws_cdk.aws_lambda as aws_lambda
 
 
-SOURCE_PATH = Path(__file__).parent.parent.joinpath("source")
+DIST_PATH = Path(__file__).parent.parent.joinpath("dist").absolute()
+
 
 class HelloWorkflowStack(core.Stack):
 
@@ -20,9 +21,36 @@ class HelloWorkflowStack(core.Stack):
         # Lambda Functions
         check_workflow_ready_lambda = aws_lambda.Function(
             self, "CheckWorkflowReady",
-            code=aws_lambda.Code.from_asset(SOURCE_PATH/"check_workflow_ready"),
+            code=aws_lambda.Code.from_asset(str(DIST_PATH)),
             runtime=aws_lambda.Runtime.PYTHON_3_8,
-            handler="lambda_handler"
+            handler="source.check_workflow_ready.lambda_handler"
         )
+        string_replace_lambda = aws_lambda.Function(
+            self, "StringReplace",
+            code=aws_lambda.Code.from_asset(str(DIST_PATH)),
+            runtime=aws_lambda.Runtime.PYTHON_3_8,
+            handler="source.string_replace.lambda_handler"
+        )
+        convert_csv_to_json_lambda = aws_lambda.Function(
+            self, "ConvertCsvToJson",
+            code=aws_lambda.Code.from_asset(str(DIST_PATH)),
+            runtime=aws_lambda.Runtime.PYTHON_3_8,
+            handler="source.convert_csv_to_json.lambda_handler"
+        )
+
+        # Permissions
+        source_bucket.grant_read(check_workflow_ready_lambda)
+        source_bucket.grant_read(string_replace_lambda)
+        processing_bucket.grant_write(string_replace_lambda)
+        processing_bucket.grant_read(convert_csv_to_json_lambda)
+        dest_bucket.grant_write(convert_csv_to_json_lambda)
+
+        # Outputs
+        core.CfnOutput(self, "SourceBucketName", value=source_bucket.bucket_name)
+        core.CfnOutput(self, "DestinationBucketName", value=dest_bucket.bucket_name)
+        core.CfnOutput(self, "ProcessingBucketName", value=processing_bucket.bucket_name)
+        core.CfnOutput(self, "CheckWorkflowReadyLambda", value=check_workflow_ready_lambda.function_name)
+        core.CfnOutput(self, "StringReplaceLambda", value=string_replace_lambda.function_name)
+        core.CfnOutput(self, "ConvertCsvToJsonLambda", value=convert_csv_to_json_lambda.function_name)
 
         # State Machine

@@ -1,4 +1,6 @@
 invoke
 pip-tools
 pytest
+pytest-cov
+codecov
 moto
