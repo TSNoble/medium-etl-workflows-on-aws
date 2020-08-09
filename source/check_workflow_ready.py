@@ -1,10 +1,13 @@
 from typing import List, Dict
 
 import jmespath
+import boto3
 
 
-def lambda_handler(event, context):
-    pass
+def lambda_handler(event, _):
+    s3_client = boto3.client("s3")
+    s3_files_present = s3_client.list_objects_v2(Bucket=event["InputBucket"])
+    return is_workflow_ready(s3_files_present, event["RequiredFiles"])
 
 
 def is_workflow_ready(s3_files: Dict, required_files: List[str]) -> bool:
