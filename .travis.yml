@@ -4,9 +4,16 @@ cache: pip
 env:
   - AWS_DEFAULT_REGION=eu-west-1
 install:
-  - pip install -r requirements/jobs.txt
-  - pip install -r requirements/dev.txt
+  - apt-get install nodejs
+  - npm install -g aws-cdk
+  - pip install -r requirements/all.txt
 script:
   - pytest --cov=source test/unit
+  - rm -rf dist
+  - pip install -r requirements/jobs.txt -t dist
+  - cp -R source dist
+  - cdk deploy HelloWorldStack
+  - aws cloudformation describe-stacks --stack-name "HelloWorldStack" --query "Stacks[0].Outputs" > stack-outputs.json
+  - pytest test/component
 after_success:
   - codecov

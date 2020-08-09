@@ -1,6 +1,7 @@
 venv/
 cdk.out/
 .idea/
+**.pyc
 **__pycache__**
 dist/
 stack-outputs.json
