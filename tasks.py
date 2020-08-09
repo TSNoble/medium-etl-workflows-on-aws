@@ -25,7 +25,7 @@ def sync(c):
 
 @task
 def package(c):
-    c.run("mkdir dist")
+    c.run("rm -rf dist")
     c.run("cp -R source dist")
     c.run("pip install -r requirements/jobs.txt -t dist")
 
@@ -39,4 +39,9 @@ def clean(c):
 
 @task
 def deploy(c):
-    c.run("cdk deploy HelloWorldStack --profile bjss-tom")
+    c.run("cdk deploy HelloWorldStack --profile bjss-tom --require-approval never")
+
+
+@task
+def stack_outputs(c):
+    c.run("aws cloudformation describe-stacks --stack-name \"HelloWorldStack\" --query \"Stacks[0].Outputs\" > stack-outputs.json")
