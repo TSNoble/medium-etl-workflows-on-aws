@@ -6,7 +6,7 @@ import pandas as pd
 from source.calculate_total_earnings import calculate_total_earnings, lambda_handler
 
 
-DATA_DIR = Path(__file__).parent.parent.joinpath("data")
+DATA_DIR = Path(__file__).parent.parent.parent.joinpath("data")
 
 
 @pytest.mark.parametrize(
