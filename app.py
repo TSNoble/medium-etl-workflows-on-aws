@@ -4,5 +4,5 @@ from stack.hello_workflow_stack import HelloWorkflowStack
 
 
 app = App()
-HelloWorkflowStack(app, "HelloWorldStack")
+HelloWorkflowStack(app, "HelloWorkflowStack")
 app.synth()
