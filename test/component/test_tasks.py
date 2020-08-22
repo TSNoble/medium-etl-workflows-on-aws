@@ -40,6 +40,8 @@ def mock_files():
     s3_client.put_object(Bucket=source_bucket_name, Key="file2", Body="")
     s3_client.upload_file(Bucket=source_bucket_name, Key="people.csv", Filename=str(DATA_DIR/"people.csv"))
     s3_client.upload_file(Bucket=source_bucket_name, Key="jobs.csv", Filename=str(DATA_DIR/"jobs.csv"))
+    s3_client.upload_file(Bucket=processing_bucket_name, Key="string_replace/people.csv", Filename=str(DATA_DIR/"people.csv"))
+    s3_client.upload_file(Bucket=processing_bucket_name, Key="string_replace/jobs.csv", Filename=str(DATA_DIR / "jobs.csv"))
     s3_client.upload_file(Bucket=processing_bucket_name, Key="calculate_total_earnings/merged.csv", Filename=str(DATA_DIR/"merged.csv"))
     yield
     s3_resource.Bucket(source_bucket_name).objects.all().delete()
@@ -88,6 +90,21 @@ def test_string_replace_lambda(mock_files, input_key, expected_file):
         "OutputKey": f"string_replace/{input_key}"
     }
     function_name = get_stack_output("StringReplaceLambda")
+    response = lambda_client.invoke(FunctionName=function_name, Payload=json.dumps(event))
+    assert response["StatusCode"] == 200
+    assert object_exists(bucket=event["OutputBucket"], key=event["OutputKey"])
+
+
+def test_calculate_total_earnings_lambda(mock_files):
+    lambda_client = boto3.client("lambda")
+    event = {
+        "InputBucket": get_stack_output("ProcessingBucketName"),
+        "PeopleKey": "string_replace/people.csv",
+        "JobsKey": "string_replace/jobs.csv",
+        "OutputBucket": get_stack_output("ProcessingBucketName"),
+        "OuputKey": "calculate_total_earnings/merged.csv"
+    }
+    function_name = get_stack_output("CalculateTotalEarningsLambda")
     response = lambda_client.invoke(FunctionName=function_name, Payload=json.dumps(event))
     assert response["StatusCode"] == 200
     assert object_exists(bucket=event["OutputBucket"], key=event["OutputKey"])

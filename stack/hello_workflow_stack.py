@@ -3,6 +3,8 @@ from pathlib import Path
 import aws_cdk.core as core
 import aws_cdk.aws_s3 as s3
 import aws_cdk.aws_lambda as aws_lambda
+import aws_cdk.aws_stepfunctions as sf
+import aws_cdk.aws_stepfunctions_tasks as sf_tasks
 
 
 DIST_PATH = Path(__file__).parent.parent.joinpath("dist").absolute()
@@ -31,6 +33,12 @@ class HelloWorkflowStack(core.Stack):
             runtime=aws_lambda.Runtime.PYTHON_3_8,
             handler="string_replace.lambda_handler"
         )
+        calculate_total_earnings_lambda = aws_lambda.Function(
+            self, "CalculateTotalEarnings",
+            code=aws_lambda.Code.from_asset(str(DIST_PATH)),
+            runtime=aws_lambda.Runtime.PYTHON_3_8,
+            handler="calculate_total_earnings.lambda_handler"
+        )
         convert_csv_to_json_lambda = aws_lambda.Function(
             self, "ConvertCsvToJson",
             code=aws_lambda.Code.from_asset(str(DIST_PATH)),
@@ -42,6 +50,7 @@ class HelloWorkflowStack(core.Stack):
         source_bucket.grant_read(check_workflow_ready_lambda)
         source_bucket.grant_read(string_replace_lambda)
         processing_bucket.grant_write(string_replace_lambda)
+        processing_bucket.grant_read_write(calculate_total_earnings_lambda)
         processing_bucket.grant_read(convert_csv_to_json_lambda)
         dest_bucket.grant_write(convert_csv_to_json_lambda)
 
@@ -51,6 +60,12 @@ class HelloWorkflowStack(core.Stack):
         core.CfnOutput(self, "ProcessingBucketName", value=processing_bucket.bucket_name)
         core.CfnOutput(self, "CheckWorkflowReadyLambda", value=check_workflow_ready_lambda.function_name)
         core.CfnOutput(self, "StringReplaceLambda", value=string_replace_lambda.function_name)
+        core.CfnOutput(self, "CalculateTotalEarningsLambda", value=calculate_total_earnings_lambda.function_name)
         core.CfnOutput(self, "ConvertCsvToJsonLambda", value=convert_csv_to_json_lambda.function_name)
 
         # State Machine
+        # check_workflow_ready_task = sf_tasks.LambdaInvoke(lambda_function=check_workflow_ready_lambda)
+        # string_replace_task = sf_tasks.LambdaInvoke(lambda_function=string_replace_lambda)
+        # convert_csv_to_json_task = sf_tasks.LambdaInvoke(lambda_function=convert_csv_to_json_lambda)
+
+
