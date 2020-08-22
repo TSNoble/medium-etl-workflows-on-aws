@@ -22,25 +22,25 @@ class HelloWorkflowStack(core.Stack):
 
         # Lambda Functions
         check_workflow_ready_lambda = aws_lambda.Function(
-            self, "CheckWorkflowReady",
+            self, "CheckWorkflowReadyFunction",
             code=aws_lambda.Code.from_asset(str(DIST_PATH)),
             runtime=aws_lambda.Runtime.PYTHON_3_8,
             handler="check_workflow_ready.lambda_handler"
         )
         string_replace_lambda = aws_lambda.Function(
-            self, "StringReplace",
+            self, "StringReplaceFunction",
             code=aws_lambda.Code.from_asset(str(DIST_PATH)),
             runtime=aws_lambda.Runtime.PYTHON_3_8,
             handler="string_replace.lambda_handler"
         )
         calculate_total_earnings_lambda = aws_lambda.Function(
-            self, "CalculateTotalEarnings",
+            self, "CalculateTotalEarningsFunction",
             code=aws_lambda.Code.from_asset(str(DIST_PATH)),
             runtime=aws_lambda.Runtime.PYTHON_3_8,
             handler="calculate_total_earnings.lambda_handler"
         )
         convert_csv_to_json_lambda = aws_lambda.Function(
-            self, "ConvertCsvToJson",
+            self, "ConvertCsvToJsonFunction",
             code=aws_lambda.Code.from_asset(str(DIST_PATH)),
             runtime=aws_lambda.Runtime.PYTHON_3_8,
             handler="convert_csv_to_json.lambda_handler"
