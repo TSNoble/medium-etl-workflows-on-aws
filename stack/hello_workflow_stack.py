@@ -28,8 +28,8 @@ class HelloWorkflowStack(core.Stack):
             handler="generate_workflow_input.lambda_handler",
             environment={
                 "InputBucketName": source_bucket.bucket_name,
-                "ProcessingBucket": processing_bucket.bucket_name,
-                "OutputBucket": dest_bucket.bucket_name
+                "ProcessingBucketName": processing_bucket.bucket_name,
+                "OutputBucketName": dest_bucket.bucket_name
             }
         )
         check_workflow_ready_lambda = aws_lambda.Function(
