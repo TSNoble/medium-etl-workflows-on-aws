@@ -25,7 +25,12 @@ class HelloWorkflowStack(core.Stack):
             self, "GenerateWorkflowInputFunction",
             code=aws_lambda.Code.from_asset(str(DIST_PATH)),
             runtime=aws_lambda.Runtime.PYTHON_3_8,
-            handler="generate_workflow_input.lambda_handler"
+            handler="generate_workflow_input.lambda_handler",
+            environment={
+                "InputBucketName": source_bucket.bucket_name,
+                "ProcessingBucket": processing_bucket.bucket_name,
+                "OutputBucket": dest_bucket.bucket_name
+            }
         )
         check_workflow_ready_lambda = aws_lambda.Function(
             self, "CheckWorkflowReadyFunction",
@@ -123,6 +128,7 @@ class HelloWorkflowStack(core.Stack):
         hello_workflow_state_machine = sf.StateMachine(
             self, "HelloWorkflowStateMachine",
             definition=sf.Chain\
-                .start(check_workflow_ready_task)\
+                .start(generate_workflow_input_task)\
+                .next(check_workflow_ready_task)\
                 .next(run_workflow)
         )
