@@ -21,6 +21,12 @@ class HelloWorkflowStack(core.Stack):
         processing_bucket = s3.Bucket(self, "ProcessingBucket")
 
         # Lambda Functions
+        generate_workflow_input_lambda = aws_lambda.Function(
+            self, "GenerateWorkflowInputFunction",
+            code=aws_lambda.Code.from_asset(str(DIST_PATH)),
+            runtime=aws_lambda.Runtime.PYTHON_3_8,
+            handler="generate_workflow_input.lambda_handler"
+        )
         check_workflow_ready_lambda = aws_lambda.Function(
             self, "CheckWorkflowReadyFunction",
             code=aws_lambda.Code.from_asset(str(DIST_PATH)),
@@ -58,12 +64,18 @@ class HelloWorkflowStack(core.Stack):
         core.CfnOutput(self, "SourceBucketName", value=source_bucket.bucket_name)
         core.CfnOutput(self, "DestinationBucketName", value=dest_bucket.bucket_name)
         core.CfnOutput(self, "ProcessingBucketName", value=processing_bucket.bucket_name)
+        core.CfnOutput(self, "GenerateWorkflowInputLambda", value=generate_workflow_input_lambda.function_name)
         core.CfnOutput(self, "CheckWorkflowReadyLambda", value=check_workflow_ready_lambda.function_name)
         core.CfnOutput(self, "StringReplaceLambda", value=string_replace_lambda.function_name)
         core.CfnOutput(self, "CalculateTotalEarningsLambda", value=calculate_total_earnings_lambda.function_name)
         core.CfnOutput(self, "ConvertCsvToJsonLambda", value=convert_csv_to_json_lambda.function_name)
 
         # State Machine
+        generate_workflow_input_task = sf_tasks.LambdaInvoke(
+            self, "GenerateWorkflowInput",
+            lambda_function=generate_workflow_input_lambda,
+            payload_response_only=True
+        )
         check_workflow_ready_task = sf_tasks.LambdaInvoke(
             self, "CheckWorkflowReady",
             lambda_function=check_workflow_ready_lambda,
