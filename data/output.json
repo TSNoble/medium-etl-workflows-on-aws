@@ -1,0 +1,57 @@
+[
+ {
+   "FORENAME": "Alice",
+   "SURNAME": "Smith",
+   "AGE": 21,
+   "ADDRESS": "1 Fake Street",
+   "COMPANY": "Google",
+   "JOB": "Software Engineer",
+   "MONTHS_WORKED": 6,
+   "SKILLS": "Architecture, Coding, Distributed Systems",
+   "TOTAL_EARNINGS": 18000
+ },
+ {
+   "FORENAME": "Dan",
+   "SURNAME": "White",
+   "AGE": 19,
+   "ADDRESS": "4 Bar Close",
+   "COMPANY": "Google",
+   "JOB": "Software Engineer",
+   "MONTHS_WORKED": 1,
+   "SKILLS": "Coding, Testing, Agile",
+   "TOTAL_EARNINGS": 3000
+ },
+ {
+   "FORENAME": "Bob",
+   "SURNAME": "Jones",
+   "AGE": 42,
+   "ADDRESS": "2 Alias Avenue",
+   "COMPANY": "Amazon",
+   "JOB": "Data Scientist",
+   "MONTHS_WORKED": 12,
+   "SKILLS": "Calculus, Statistics, Neural Networks",
+   "TOTAL_EARNINGS": 84000
+ },
+ {
+   "FORENAME": "Evelyn",
+   "SURNAME": "Baker",
+   "AGE": 50,
+   "ADDRESS": "5 Baz Drive",
+   "COMPANY": "Amazon",
+   "JOB": "Data Scientist",
+   "MONTHS_WORKED": 100,
+   "SKILLS": "Maths, Coding, Modelling",
+   "TOTAL_EARNINGS": 700000
+ },
+ {
+   "FORENAME": "Charlie",
+   "SURNAME": "Brown",
+   "AGE": 60,
+   "ADDRESS": "3 Foo Lane",
+   "COMPANY": "Microsoft",
+   "JOB": "Platform Engineer",
+   "MONTHS_WORKED": 42,
+   "SKILLS": "AWS, Coding, Azure",
+   "TOTAL_EARNINGS": 273000
+ }
+]

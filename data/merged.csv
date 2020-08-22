@@ -1,6 +1,6 @@
 FORENAME,SURNAME,AGE,ADDRESS,COMPANY,JOB,MONTHS_WORKED,SKILLS,TOTAL_EARNINGS
-Alice,Smith,21,1 Fake Street,Google,Software Engineer,6,"Architecture, Programming, Distributed Systems",18000
-Dan,White,19,4 Bar Close,Google,Software Engineer,1,"Programming, Testing, Agile",3000
+Alice,Smith,21,1 Fake Street,Google,Software Engineer,6,"Architecture, Coding, Distributed Systems",18000
+Dan,White,19,4 Bar Close,Google,Software Engineer,1,"Coding, Testing, Agile",3000
 Bob,Jones,42,2 Alias Avenue,Amazon,Data Scientist,12,"Calculus, Statistics, Neural Networks",84000
-Evelyn,Baker,50,5 Baz Drive,Amazon,Data Scientist,100,"Maths, Programming, Modelling",700000
-Charlie,Brown,60,3 Foo Lane,Microsoft,Platform Engineer,42,"AWS, Programming, Azure",273000
+Evelyn,Baker,50,5 Baz Drive,Amazon,Data Scientist,100,"Maths, Coding, Modelling",700000
+Charlie,Brown,60,3 Foo Lane,Microsoft,Platform Engineer,42,"AWS, Coding, Azure",273000
