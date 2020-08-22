@@ -89,9 +89,13 @@ class HelloWorkflowStack(core.Stack):
             result_path="convert_csv_to_json"
         )
 
-        hello_workflow_sf = sf.Chain.start(check_workflow_ready_task)\
-                                    .next(string_replace_task)\
-                                    .next(calculate_total_earnings_task)\
-                                    .next(convert_csv_to_json_task)
+        hello_workflow_sm = sf.StateMachine(
+            self, "HelloWorkflowStateMachine",
+            definition=sf.Chain
+                .start(check_workflow_ready_task)
+                .next(string_replace_task)
+                .next(calculate_total_earnings_task)
+                .next(convert_csv_to_json_task)
+        )
         # sf.Choice().when(condition=sf.Condition.boolean_equals("$."))
         # sf.Map().iterator(string_replace_task)
