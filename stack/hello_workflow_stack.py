@@ -68,7 +68,6 @@ class HelloWorkflowStack(core.Stack):
             self, "CheckWorkflowReady",
             lambda_function=check_workflow_ready_lambda,
             input_path="$.CheckWorkflowReady.Input",
-            output_path="$.Payload",
             result_path="$.CheckWorkflowReady.Output"
         )
         string_replace_task = sf_tasks.LambdaInvoke(
