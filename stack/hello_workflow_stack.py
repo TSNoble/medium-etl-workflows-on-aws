@@ -91,8 +91,6 @@ class HelloWorkflowStack(core.Stack):
         string_replace_task = sf_tasks.LambdaInvoke(
             self, "ReplaceString",
             lambda_function=string_replace_lambda,
-            input_path="$.StringReplace.Input",
-            output_path="$.Payload",
             result_path="$.StringReplace.Output",
             payload_response_only=True
         )
@@ -100,7 +98,6 @@ class HelloWorkflowStack(core.Stack):
             self, "CalculateTotalEarnings",
             lambda_function=calculate_total_earnings_lambda,
             input_path="$.CalculateTotalEarnings.Input",
-            output_path="$.Payload",
             result_path="$.CalculateTotalEarnings.Output",
             payload_response_only=True
         )
@@ -108,15 +105,19 @@ class HelloWorkflowStack(core.Stack):
             self, "ConvertCsvToJson",
             lambda_function=convert_csv_to_json_lambda,
             input_path="$.ConvertCsvToJson.Input",
-            output_path="$.Payload",
             result_path="$.ConvertCsvToJson.Output",
             payload_response_only=True
         )
 
         end_task = sf.Succeed(self, "WorkflowEnd")
 
+        replace_string_parallel = sf.Map(
+            self, "ReplaceStringParallel",
+            items_path="$.StringReplace.Input"
+        ).iterator(string_replace_task)
+
         workflow_steps = sf.Chain.\
-            start(string_replace_task)\
+            start(replace_string_parallel)\
             .next(calculate_total_earnings_task)\
             .next(convert_csv_to_json_task)\
             .next(end_task)
