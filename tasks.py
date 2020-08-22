@@ -39,9 +39,9 @@ def clean(c):
 
 @task
 def deploy(c):
-    c.run("cdk deploy HelloWorldStack --require-approval never")
+    c.run("cdk deploy HelloWorkflowStack --require-approval never")
 
 
 @task
 def stack_outputs(c):
-    c.run("aws cloudformation describe-stacks --stack-name \"HelloWorldStack\" --query \"Stacks[0].Outputs\" > stack-outputs.json")
+    c.run("aws cloudformation describe-stacks --stack-name \"HelloWorkflowStack\" --query \"Stacks[0].Outputs\" > stack-outputs.json")
