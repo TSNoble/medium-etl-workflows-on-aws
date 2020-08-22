@@ -64,8 +64,24 @@ class HelloWorkflowStack(core.Stack):
         core.CfnOutput(self, "ConvertCsvToJsonLambda", value=convert_csv_to_json_lambda.function_name)
 
         # State Machine
-        # check_workflow_ready_task = sf_tasks.LambdaInvoke(lambda_function=check_workflow_ready_lambda)
-        # string_replace_task = sf_tasks.LambdaInvoke(lambda_function=string_replace_lambda)
-        # convert_csv_to_json_task = sf_tasks.LambdaInvoke(lambda_function=convert_csv_to_json_lambda)
+        check_workflow_ready_task = sf_tasks.LambdaInvoke(
+            self, "CheckWorkflowReady",
+            lambda_function=check_workflow_ready_lambda
+        )
+        string_replace_task = sf_tasks.LambdaInvoke(
+            self, "ReplaceString",
+            lambda_function=string_replace_lambda
+        )
+        calculate_total_earnings_task = sf_tasks.LambdaInvoke(
+            self, "CalculateTotalEarnings",
+            lambda_function=calculate_total_earnings_lambda
+        )
+        convert_csv_to_json_task = sf_tasks.LambdaInvoke(
+            self, "ConvertCsvToJson",
+            lambda_function=convert_csv_to_json_lambda
+        )
 
-
+        hello_workflow_sf = sf.Chain.start(check_workflow_ready_task)\
+                                    .next(string_replace_task)\
+                                    .next(calculate_total_earnings_task)\
+                                    .next(convert_csv_to_json_task)\
