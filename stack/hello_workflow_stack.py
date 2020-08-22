@@ -68,31 +68,35 @@ class HelloWorkflowStack(core.Stack):
             self, "CheckWorkflowReady",
             lambda_function=check_workflow_ready_lambda,
             input_path="$.CheckWorkflowReady.Input",
-            result_path="$.CheckWorkflowReady.Output"
+            result_path="$.CheckWorkflowReady.Output",
+            payload_response_only=True
         )
         string_replace_task = sf_tasks.LambdaInvoke(
             self, "ReplaceString",
             lambda_function=string_replace_lambda,
             input_path="$.StringReplace.Input",
             output_path="$.Payload",
-            result_path="$.StringReplace.Output"
+            result_path="$.StringReplace.Output",
+            payload_response_only=True
         )
         calculate_total_earnings_task = sf_tasks.LambdaInvoke(
             self, "CalculateTotalEarnings",
             lambda_function=calculate_total_earnings_lambda,
             input_path="$.CalculateTotalEarnings.Input",
             output_path="$.Payload",
-            result_path="$.CalculateTotalEarnings.Output"
+            result_path="$.CalculateTotalEarnings.Output",
+            payload_response_only=True
         )
         convert_csv_to_json_task = sf_tasks.LambdaInvoke(
             self, "ConvertCsvToJson",
             lambda_function=convert_csv_to_json_lambda,
             input_path="$.ConvertCsvToJson.Input",
             output_path="$.Payload",
-            result_path="$.ConvertCsvToJson.Output"
+            result_path="$.ConvertCsvToJson.Output",
+            payload_response_only=True
         )
 
-        end_task = sf.Succeed(self, "End")
+        end_task = sf.Succeed(self, "WorkflowEnd")
 
         workflow_steps = sf.Chain.\
             start(string_replace_task)\
@@ -100,7 +104,7 @@ class HelloWorkflowStack(core.Stack):
             .next(convert_csv_to_json_task)\
             .next(end_task)
 
-        run_workflow = sf.Choice(self, "RunWorkflow")\
+        run_workflow = sf.Choice(self, "RunWorkflowDecision")\
             .when(sf.Condition.boolean_equals("$.CheckWorkflowReady.Output.Payload", True), workflow_steps)\
             .otherwise(end_task)
 
