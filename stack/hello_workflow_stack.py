@@ -23,19 +23,19 @@ class HelloWorkflowStack(core.Stack):
             self, "CheckWorkflowReady",
             code=aws_lambda.Code.from_asset(str(DIST_PATH)),
             runtime=aws_lambda.Runtime.PYTHON_3_8,
-            handler="source.check_workflow_ready.lambda_handler"
+            handler="check_workflow_ready.lambda_handler"
         )
         string_replace_lambda = aws_lambda.Function(
             self, "StringReplace",
             code=aws_lambda.Code.from_asset(str(DIST_PATH)),
             runtime=aws_lambda.Runtime.PYTHON_3_8,
-            handler="source.string_replace.lambda_handler"
+            handler="string_replace.lambda_handler"
         )
         convert_csv_to_json_lambda = aws_lambda.Function(
             self, "ConvertCsvToJson",
             code=aws_lambda.Code.from_asset(str(DIST_PATH)),
             runtime=aws_lambda.Runtime.PYTHON_3_8,
-            handler="source.convert_csv_to_json.lambda_handler"
+            handler="convert_csv_to_json.lambda_handler"
         )
 
         # Permissions
