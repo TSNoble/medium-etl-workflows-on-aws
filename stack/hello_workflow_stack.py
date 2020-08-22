@@ -105,7 +105,7 @@ class HelloWorkflowStack(core.Stack):
             .next(end_task)
 
         run_workflow = sf.Choice(self, "RunWorkflowDecision")\
-            .when(sf.Condition.boolean_equals("$.CheckWorkflowReady.Output.Payload", True), workflow_steps)\
+            .when(sf.Condition.boolean_equals("$.CheckWorkflowReady.Output", True), workflow_steps)\
             .otherwise(end_task)
 
         hello_workflow_state_machine = sf.StateMachine(
