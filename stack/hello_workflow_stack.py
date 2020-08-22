@@ -101,7 +101,7 @@ class HelloWorkflowStack(core.Stack):
             self, "HelloWorkflowStateMachine",
             definition=sf.Chain
                 .start(check_workflow_ready_task)
-                .next(sf.Choice()
+                .next(sf.Choice
                     .when(sf.Condition.boolean_equals("$.CheckWorkflowReady.Output.Payload", True), workflow_steps)
                     .otherwise(sf.Succeed())
                 )
