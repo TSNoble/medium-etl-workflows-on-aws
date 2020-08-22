@@ -113,7 +113,8 @@ class HelloWorkflowStack(core.Stack):
 
         replace_string_parallel = sf.Map(
             self, "ReplaceStringParallel",
-            items_path="$.StringReplace.Input"
+            items_path="$.StringReplace.Input",
+            result_path="$.StringReplace.Output"
         ).iterator(string_replace_task)
 
         workflow_steps = sf.Chain.\
