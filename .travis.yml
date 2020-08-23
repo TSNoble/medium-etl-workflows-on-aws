@@ -1,0 +1,24 @@
+sudo: true
+language: python
+python: 3.8
+cache: pip
+env:
+  matrix:
+    - AWS_DEFAULT_REGION=eu-west-1
+  global:
+    - secure: K7Jk91bdeWRdMbCKInv89Nm2RMHSPGy3T//puy076FwUfxxf+d5ztH0H5G9KTJz9mSP2GHfyMp4LC0PEysESlLo4vJb/BDF6qpJLfRasMRxM0r4zSs8bwZ+DxiZSi3gSICvavGo7p8yochH63K9giOHFsKA9S+rruNDFh7rR6AdvGhK6AdL/8O3AKsxWX/Yfe3gLFST2//OizqVySCmWbc9pMlDakHEFBTf4yYDPSCdeiPoSrTk1s2Hq+AJOQtjRDNLxuxgFCC8MCqomiKAE1/jwruwJDKvXKSaa2Gkj4PfXuSFcPwfO2BnMRak4ybftvcg9rMViVqrtO/jUGwlLxjTa99uvqxmZHPCz22CPmdiGHSYnEqJsknvaHaa4R4Ps1a1uuZERpEtchDWYsKwdUCdqzlzlmSCCCox8J4inZQegWcnrKhXQ1PSZjEOuXREBNOTM0V8mRZdRjYBd1YuI3ffoNbSxjKL8IfGLZpAX/8OLJomGlM/3Y66fl0E35gDqy84WdkvkEVURIUt2renkW+klw66iwZmEfTbjrEf1hbd/d1snfpRkdvIEVGyPyGqfgYGpAaT7ZS8jDWzY7gWINp+fBYFBHCz6yEYJA9SCqBxVjzwIhzOQvzsPmbL2Y6uJOUwl9STNizCnZhzyAL1qh+YqiALkk7Pxzn/GyPn6XjA=
+    - secure: SCPrO7lNOs0fSuNJfQ+EN4U548w+afS3/0C3HJwtFXZgVtZH8619xCmEtjVEHhW+S3D2nsDMHHjUtVb2gk8Us/PgpyNF0ZG41YeS6H0gUk3uVKCYQYp7H5BONA7JyGXI+HckoOtuBtA/SUXqGNgle4/rziPYIl3MFG65JgzmmX3Rv+t6GIlsl5jmmP/fctC51GK/rGs4CI5xv/Hgfr6dty2mfiE3V6BySNO5JCLk4rdLrJN/oLVJgCRpU2hD/7GhWXyUrFahu3l5HwWIUL81vlEP45d9dJiIX+b/uP1r+bOcIxl+5co6D3W14b2GwNU4x85VhTl23aRlGvPut7qXzfwxX7qBlleJubxWE3gqqTja8PO61AiPqa1UNugNp4LYw78Vmuw4OJa6G63M6FAsKans0aP8EoJYVTfG3ln63pUcdH7RELokQqiKoYw1Nq1JVReMBDHi7ei0Q6KjB6U1cQg50mHykQjXbYirtHoaULeeACyn8YH5D8WEJod1qONsZGX7Kq0VjPV3vpFuZ0ujwGWwHbocF1foLD0jwEJcEYAOrCUiJb6voqZtH0XKxC1AKmkwRdY/v9OIxMQ7y+Ixe0mBBvYSdZ/+rQdooXPPvBUCRYeRkcPc1sFv3e6Gv4eWl9+zuF/5RQ+mx/m4whQIDDc/HKSzRI5V/txXKsfwrJY=
+    - NODE_VERSION="14.7.0"
+before_install:
+  - nvm install $NODE_VERSION
+install:
+  - npm install -g aws-cdk
+  - pip install -r requirements/all.txt
+script:
+  - pytest --cov=source test/unit
+  - invoke package
+  - invoke deploy
+  - invoke stack-outputs
+  - pytest test/component
+after_success:
+  - codecov
