@@ -112,7 +112,7 @@ pytest==6.0.1             # via -r requirements/dev.in, pytest-cov
 python-dateutil==2.8.1    # via botocore, jsii, moto, pandas
 python-jose==3.2.0        # via moto
 pytz==2020.1              # via moto, pandas
-pyyaml==5.3.1             # via awscli, cfn-lint, moto
+pyyaml==5.4             # via awscli, cfn-lint, moto
 requests==2.24.0          # via codecov, docker, moto, responses
 responses==0.10.16        # via moto
 rsa==4.5                  # via awscli, python-jose
