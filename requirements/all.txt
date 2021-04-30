@@ -115,7 +115,7 @@ pytz==2020.1              # via moto, pandas
 pyyaml==5.3.1             # via awscli, cfn-lint, moto
 requests==2.24.0          # via codecov, docker, moto, responses
 responses==0.10.16        # via moto
-rsa==4.5                  # via awscli, python-jose
+rsa==4.7                  # via awscli, python-jose
 s3transfer==0.3.3         # via awscli, boto3
 six==1.15.0               # via aws-sam-translator, cfn-lint, cryptography, docker, ecdsa, jsonschema, junit-xml, moto, packaging, pip-tools, pyrsistent, python-dateutil, python-jose, responses, websocket-client
 sshpubkeys==3.1.0         # via moto
