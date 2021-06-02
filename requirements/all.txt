@@ -122,7 +122,7 @@ sshpubkeys==3.1.0         # via moto
 toml==0.10.1              # via pytest
 typed-ast==1.4.1          # via mypy
 typing-extensions==3.7.4.2  # via jsii, mypy
-urllib3==1.25.10          # via botocore, requests, responses
+urllib3==1.26.5          # via botocore, requests, responses
 websocket-client==0.57.0  # via docker
 werkzeug==1.0.1           # via moto
 wrapt==1.12.1             # via aws-xray-sdk
